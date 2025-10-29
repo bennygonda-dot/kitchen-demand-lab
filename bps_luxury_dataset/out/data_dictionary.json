@@ -1,0 +1,34 @@
+{
+  "luxury_sf_permits_by_cbsa_month.csv": {
+    "description": "CBSA-month panel of single-family building permits with luxury market flags",
+    "columns": {
+      "date": "Date (first day of month)",
+      "year": "Year",
+      "month": "Month (1-12)",
+      "cbsa_code": "CBSA/Metro area code",
+      "cbsa_name": "CBSA/Metro area name",
+      "sf_units": "Number of single-family units permitted",
+      "sf_val": "Total valuation of single-family permits ($)",
+      "sf_avg_val_per_unit": "Average valuation per single-family unit ($)",
+      "is_top_quintile": "1 if CBSA is in top quintile (\u226580th percentile) for this month, 0 otherwise",
+      "is_top_decile": "1 if CBSA is in top decile (\u226590th percentile) for this month, 0 otherwise",
+      "p80_threshold": "80th percentile threshold for average valuation this month ($)",
+      "p90_threshold": "90th percentile threshold for average valuation this month ($)"
+    }
+  },
+  "national_luxury_sf_pipeline.csv": {
+    "description": "National monthly aggregates of single-family building permits and luxury shares",
+    "columns": {
+      "date": "Date (first day of month)",
+      "year": "Year",
+      "month": "Month (1-12)",
+      "sf_units": "Total single-family units permitted nationally",
+      "sf_val": "Total valuation of single-family permits nationally ($)",
+      "national_avg_val_per_unit": "National average valuation per unit ($)",
+      "top_quintile_units": "Number of SF units in CBSAs flagged as top quintile",
+      "top_quintile_share": "Share of SF units in top quintile CBSAs",
+      "top_decile_units": "Number of SF units in CBSAs flagged as top decile",
+      "top_decile_share": "Share of SF units in top decile CBSAs"
+    }
+  }
+}
