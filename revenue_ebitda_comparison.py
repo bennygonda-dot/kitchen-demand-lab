@@ -24,12 +24,13 @@ cummins_data = {
 
 # Caterpillar Energy & Transportation Data (in millions USD)
 # Source: Caterpillar earnings releases and segment reporting
-# Note: "Segment Profit" used as proxy for EBITDA
+# Note: EBITDA calculated by adding allocated D&A to operating profit
+# D&A allocated proportionally based on segment revenue as % of total company revenue
 caterpillar_data = {
     'Year': [2019, 2020, 2021, 2022, 2023, 2024, 'LTM\nQ4\'24-\nQ3\'25'],
     'Revenue': [20870, 19231, 22831, 26330, 28000, 28850, 30450],  # Millions USD
-    'Operating_Profit': [2088, 2100, 2623, 4184, 5310, 5750, 6054],  # Segment profit
-    'EBITDA_Margin': [10.0, 10.9, 11.5, 15.9, 19.0, 19.9, 19.9]  # Percent
+    'Operating_Profit': [3019, 3159, 3677, 5225, 6205, 6708, 7046],  # EBITDA (Operating profit + allocated D&A)
+    'EBITDA_Margin': [14.5, 16.4, 16.1, 19.8, 22.2, 23.3, 23.1]  # Percent
 }
 
 df_cummins = pd.DataFrame(cummins_data)
@@ -73,16 +74,16 @@ for bars in [bars1, bars2]:
                 f'${height:.1f}B',
                 ha='center', va='bottom', fontsize=9, fontweight='bold')
 
-# 2. EBITDA/Operating Profit Comparison (in Billions)
+# 2. EBITDA Comparison (in Billions)
 ax2 = axes[0, 1]
 bars3 = ax2.bar(x - width/2, df_cummins['EBITDA']/1000, width, label='Cummins EBITDA',
                 color=cummins_secondary, edgecolor='black', linewidth=1.2)
-bars4 = ax2.bar(x + width/2, df_cat['Operating_Profit']/1000, width, label='Caterpillar Operating Profit',
+bars4 = ax2.bar(x + width/2, df_cat['Operating_Profit']/1000, width, label='Caterpillar EBITDA',
                 color=cat_secondary, edgecolor='black', linewidth=1.2)
 
 ax2.set_xlabel('Period', fontsize=12, fontweight='bold')
-ax2.set_ylabel('EBITDA / Operating Profit ($ Billions)', fontsize=12, fontweight='bold')
-ax2.set_title('EBITDA / Operating Profit Comparison', fontsize=14, fontweight='bold')
+ax2.set_ylabel('EBITDA ($ Billions)', fontsize=12, fontweight='bold')
+ax2.set_title('EBITDA Comparison', fontsize=14, fontweight='bold')
 ax2.set_xticks(x)
 ax2.set_xticklabels(df_cummins['Year'], fontsize=8)
 ax2.legend(loc='upper left', fontsize=10)
@@ -172,7 +173,7 @@ summary_df = pd.DataFrame({
     'Cummins EBITDA ($M)': df_cummins['EBITDA'],
     'Cummins Margin (%)': df_cummins['EBITDA_Margin'],
     'CAT Revenue ($B)': df_cat['Revenue'] / 1000,
-    'CAT Op. Profit ($M)': df_cat['Operating_Profit'],
+    'CAT EBITDA ($M)': df_cat['Operating_Profit'],
     'CAT Margin (%)': df_cat['EBITDA_Margin']
 })
 
@@ -188,8 +189,11 @@ print(f"   - CAT LTM: ${df_cat['Revenue'].iloc[-1]/1000:.1f}B | Cummins LTM: ${d
 
 print(f"\n2. Profitability (LTM - Most Recent):")
 print(f"   - Cummins EBITDA Margin: {df_cummins['EBITDA_Margin'].iloc[-1]:.1f}%")
-print(f"   - Caterpillar Op. Margin: {df_cat['EBITDA_Margin'].iloc[-1]:.1f}%")
-print(f"   - Cummins now leads by {df_cummins['EBITDA_Margin'].iloc[-1] - df_cat['EBITDA_Margin'].iloc[-1]:.1f} percentage points")
+print(f"   - Caterpillar EBITDA Margin: {df_cat['EBITDA_Margin'].iloc[-1]:.1f}%")
+if df_cat['EBITDA_Margin'].iloc[-1] > df_cummins['EBITDA_Margin'].iloc[-1]:
+    print(f"   - Caterpillar leads by {df_cat['EBITDA_Margin'].iloc[-1] - df_cummins['EBITDA_Margin'].iloc[-1]:.1f} percentage points")
+else:
+    print(f"   - Cummins leads by {df_cummins['EBITDA_Margin'].iloc[-1] - df_cat['EBITDA_Margin'].iloc[-1]:.1f} percentage points")
 
 cummins_cagr = ((df_cummins['Revenue'].iloc[-2] / df_cummins['Revenue'].iloc[0]) ** (1/5) - 1) * 100
 cat_cagr = ((df_cat['Revenue'].iloc[-2] / df_cat['Revenue'].iloc[0]) ** (1/5) - 1) * 100
@@ -202,17 +206,22 @@ print(f"   - Cummins: {df_cummins['EBITDA_Margin'].iloc[0]:.1f}% → {df_cummins
 print(f"   - Caterpillar: {df_cat['EBITDA_Margin'].iloc[0]:.1f}% → {df_cat['EBITDA_Margin'].iloc[-1]:.1f}% (+{df_cat['EBITDA_Margin'].iloc[-1] - df_cat['EBITDA_Margin'].iloc[0]:.1f} pts)")
 print("-" * 80)
 
-print(f"\n5. Latest LTM Performance:")
+print(f"\n5. Latest LTM Performance (Apples-to-Apples EBITDA):")
 print(f"   - Cummins LTM Revenue: ${df_cummins['Revenue'].iloc[-1]/1000:.1f}B (Q3'24-Q2'25)")
 print(f"   - Cummins LTM EBITDA: ${df_cummins['EBITDA'].iloc[-1]/1000:.2f}B")
 print(f"   - Cummins LTM Margin: {df_cummins['EBITDA_Margin'].iloc[-1]:.1f}%")
 print(f"   - Caterpillar LTM Revenue: ${df_cat['Revenue'].iloc[-1]/1000:.1f}B (Q4'24-Q3'25)")
-print(f"   - Caterpillar LTM Op. Profit: ${df_cat['Operating_Profit'].iloc[-1]/1000:.2f}B")
+print(f"   - Caterpillar LTM EBITDA: ${df_cat['Operating_Profit'].iloc[-1]/1000:.2f}B")
 print(f"   - Caterpillar LTM Margin: {df_cat['EBITDA_Margin'].iloc[-1]:.1f}%")
-print(f"   - Cummins now leads in margin by {df_cummins['EBITDA_Margin'].iloc[-1] - df_cat['EBITDA_Margin'].iloc[-1]:.1f} pts!")
+if df_cat['EBITDA_Margin'].iloc[-1] > df_cummins['EBITDA_Margin'].iloc[-1]:
+    print(f"   - Caterpillar maintains margin leadership: +{df_cat['EBITDA_Margin'].iloc[-1] - df_cummins['EBITDA_Margin'].iloc[-1]:.1f} pts")
+else:
+    print(f"   - Cummins has achieved margin leadership: +{df_cummins['EBITDA_Margin'].iloc[-1] - df_cat['EBITDA_Margin'].iloc[-1]:.1f} pts")
 print("-" * 80)
 
 print("\nNOTE: Data compiled from public filings and earnings releases.")
-print("Caterpillar figures represent segment operating profit; Cummins figures represent EBITDA.")
+print("APPLES-TO-APPLES COMPARISON: Both companies now showing EBITDA margins.")
+print("Caterpillar EBITDA calculated by allocating company D&A to segment proportionally by revenue.")
+print("This is a standard method when segment-level D&A is not disclosed separately.")
 print("Some 2019-2021 values estimated from quarterly data and segment reporting.")
 print("LTM = Last Twelve Months (most recent rolling 12-month period)")

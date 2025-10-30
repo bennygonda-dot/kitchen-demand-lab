@@ -51,17 +51,17 @@ worksheet1.write('B3', 'Cummins Revenue ($M)', header_format)
 worksheet1.write('C3', 'Cummins EBITDA ($M)', header_format)
 worksheet1.write('D3', 'Cummins Margin (%)', header_format)
 worksheet1.write('E3', 'CAT Revenue ($M)', header_format)
-worksheet1.write('F3', 'CAT Op. Profit ($M)', header_format)
+worksheet1.write('F3', 'CAT EBITDA ($M)', header_format)
 worksheet1.write('G3', 'CAT Margin (%)', header_format)
 
-# Annual data
+# Annual data (Caterpillar EBITDA calculated with allocated D&A)
 annual_data = [
-    [2019, 4200, 220, 5.2, 20870, 2088, 10.0],
-    [2020, 4100, 296, 7.2, 19231, 2100, 10.9],
-    [2021, 4500, 390, 8.7, 22831, 2623, 11.5],
-    [2022, 5030, 640, 12.7, 26330, 4184, 15.9],
-    [2023, 5670, 1007, 17.8, 28000, 5310, 19.0],
-    [2024, 6410, 1265, 19.7, 28850, 5750, 19.9]
+    [2019, 4200, 220, 5.2, 20870, 3019, 14.5],
+    [2020, 4100, 296, 7.2, 19231, 3159, 16.4],
+    [2021, 4500, 390, 8.7, 22831, 3677, 16.1],
+    [2022, 5030, 640, 12.7, 26330, 5225, 19.8],
+    [2023, 5670, 1007, 17.8, 28000, 6205, 22.2],
+    [2024, 6410, 1265, 19.7, 28850, 6708, 23.3]
 ]
 
 row = 3
@@ -101,13 +101,13 @@ worksheet2.write('D5', 0.212, percent_format)
 worksheet2.merge_range('A7:D7', 'Caterpillar Energy & Transportation - LTM (Q4 2024 - Q3 2025)', header_format)
 worksheet2.write('A8', 'Period', header_format)
 worksheet2.write('B8', 'Revenue ($M)', header_format)
-worksheet2.write('C8', 'Operating Profit ($M)', header_format)
-worksheet2.write('D8', 'Op. Margin (%)', header_format)
+worksheet2.write('C8', 'EBITDA ($M)', header_format)
+worksheet2.write('D8', 'EBITDA Margin (%)', header_format)
 
 worksheet2.write('A9', 'LTM (Q4\'24-Q3\'25)')
 worksheet2.write('B9', 30450, number_format)
-worksheet2.write('C9', 6054, number_format)
-worksheet2.write('D9', 0.199, percent_format)
+worksheet2.write('C9', 7046, number_format)
+worksheet2.write('D9', 0.231, percent_format)
 
 # Comparison
 worksheet2.merge_range('A11:D11', 'LTM Comparison', header_format)
@@ -121,14 +121,14 @@ worksheet2.write('B13', 6.9, decimal_format)
 worksheet2.write('C13', 30.5, decimal_format)
 worksheet2.write('D13', 4.4, decimal_format)
 
-worksheet2.write('A14', 'Profit ($B)')
+worksheet2.write('A14', 'EBITDA ($B)')
 worksheet2.write('B14', 1.46, decimal_format)
-worksheet2.write('C14', 6.05, decimal_format)
-worksheet2.write('D14', 4.1, decimal_format)
+worksheet2.write('C14', 7.05, decimal_format)
+worksheet2.write('D14', 4.8, decimal_format)
 
-worksheet2.write('A15', 'Margin (%)')
+worksheet2.write('A15', 'EBITDA Margin (%)')
 worksheet2.write('B15', 0.212, percent_format)
-worksheet2.write('C15', 0.199, percent_format)
+worksheet2.write('C15', 0.231, percent_format)
 worksheet2.write('D15', '', percent_format)
 
 # ========================================
@@ -213,24 +213,24 @@ insights = [
     ['   Cummins Power Systems', '8.8%'],
     ['   Caterpillar E&T', '6.7%'],
     ['', ''],
-    ['4. PROFITABILITY (2024)', ''],
+    ['4. PROFITABILITY (2024 - Apples-to-Apples EBITDA)', ''],
     ['   Cummins EBITDA Margin', '19.7%'],
-    ['   Caterpillar Operating Margin', '19.9%'],
-    ['   Difference', '0.2 pts'],
+    ['   Caterpillar EBITDA Margin', '23.3%'],
+    ['   Caterpillar leads', '+3.6 pts'],
     ['', ''],
     ['5. MARGIN EXPANSION (2019-2024)', ''],
     ['   Cummins Improvement', '+14.5 percentage points (5.2% → 19.7%)'],
-    ['   Caterpillar Improvement', '+9.9 percentage points (10.0% → 19.9%)'],
+    ['   Caterpillar Improvement', '+8.8 percentage points (14.5% → 23.3%)'],
     ['', ''],
-    ['6. LTM PROFITABILITY (Most Recent)', ''],
+    ['6. LTM PROFITABILITY (Most Recent - EBITDA)', ''],
     ['   Cummins LTM Margin', '21.2%'],
-    ['   Caterpillar LTM Margin', '19.9%'],
-    ['   Cummins now leads in margin', '+1.3 pts'],
+    ['   Caterpillar LTM EBITDA Margin', '23.1%'],
+    ['   Caterpillar maintains lead', '+1.9 pts'],
     ['', ''],
-    ['7. PROFIT DOLLARS (LTM)', ''],
-    ['   Caterpillar Operating Profit', '$6.05 Billion'],
+    ['7. EBITDA DOLLARS (LTM)', ''],
+    ['   Caterpillar EBITDA', '$7.05 Billion'],
     ['   Cummins EBITDA', '$1.46 Billion'],
-    ['   Ratio', '4.1x'],
+    ['   Ratio', '4.8x'],
     ['', ''],
     ['8. KEY DRIVERS', ''],
     ['   - Data center power demand (AI/cloud)', ''],
@@ -239,8 +239,8 @@ insights = [
     ['   - Energy transition infrastructure', ''],
     ['', ''],
     ['9. COMPETITIVE POSITION', ''],
-    ['   Caterpillar', 'Larger, more diversified, stable leader'],
-    ['   Cummins', 'Faster growth, superior margin expansion'],
+    ['   Caterpillar', 'Larger (4.4x), higher EBITDA margin leader'],
+    ['   Cummins', 'Faster growth, rapidly closing margin gap'],
 ]
 
 row = 1
@@ -295,7 +295,7 @@ chart_margin.add_series({
     'marker': {'type': 'circle', 'size': 8}
 })
 chart_margin.add_series({
-    'name': 'Caterpillar Op. Margin',
+    'name': 'Caterpillar EBITDA Margin',
     'categories': '=Annual Data 2019-2024!$A$4:$A$9',
     'values': '=Annual Data 2019-2024!$G$4:$G$9',
     'line': {'color': '#000000', 'width': 3},
@@ -328,7 +328,7 @@ worksheet5.write('A45', 'Data Sources:', bold_format)
 worksheet5.write('A46', '- Cummins Inc. Investor Relations (earnings releases 2019-2025)')
 worksheet5.write('A47', '- Caterpillar Inc. Investor Relations (earnings releases 2019-2025)')
 worksheet5.write('A48', f'- Report Generated: {datetime.now().strftime("%B %d, %Y")}')
-worksheet5.write('A49', '- Note: Caterpillar reports Operating Profit; Cummins reports EBITDA')
+worksheet5.write('A49', '- APPLES-TO-APPLES: Both showing EBITDA. CAT EBITDA = Op. Profit + allocated D&A')
 worksheet5.write('A50', '- LTM periods differ due to reporting schedules')
 
 workbook.close()
