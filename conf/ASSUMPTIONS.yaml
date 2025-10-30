@@ -1,0 +1,81 @@
+# Editable market assumptions for UK cooking appliance segmentation
+# These parameters control price bands, attach rates, and value distributions
+
+# Price band definitions (GBP, ex-VAT retail equivalent)
+price_bands:
+  range_cookers:
+    mass_premium_min: 1400  # Minimum price for Mass-Premium segment
+    luxury_min: 3500         # Minimum price for Luxury segment (above this = luxury)
+    # Below mass_premium_min would be "economy" (excluded from this analysis)
+
+  built_in_cooking:
+    mass_premium_min: 800    # For built-in oven+hob+hood basket
+    luxury_min: 2000         # Luxury built-in threshold
+
+# New build attach rates (appliances per dwelling)
+attach_rates:
+  new_build_base_set: 1.0           # One complete cooking set (hob + oven + hood) per new home
+  luxury_extra_ovens_factor: 1.15   # Top deciles may have 1.15x appliance value (double ovens, etc.)
+
+# Kitchen and appliance value shares (for R&R panel)
+kitchen_share_of_RM: 0.27    # % of private housing R&M value attributable to kitchens
+                              # Source: industry estimates; tune based on survey data
+
+appliance_share_of_kitchen: 0.35  # % of kitchen project value that is appliances
+                                   # Remainder is cabinetry, countertops, labor
+
+# Range cooker share within total cooking appliances
+range_share_within_cookers:
+  method: blended      # 'trade_only' | 'retail_only' | 'blended'
+  trade_weight: 0.6    # Weight for trade data (CN 8516.60 apparent consumption)
+  retail_weight: 0.4   # Weight for retail data (SKU counts ≥90cm free-standing)
+
+  # Fallback if trade/retail data unavailable for a year
+  fallback_share: 0.12  # ~12% of cooking appliance value is range cookers (estimate)
+
+# Average Selling Prices (ASP) for unit conversion (GBP, approximate mid-points)
+ASPs:
+  range_cookers:
+    mass_premium: 2200   # ASP for Mass-Premium range cookers
+    luxury: 4200         # ASP for Luxury range cookers
+
+  built_in_sets:
+    mass_premium: 1600   # Oven + hob + hood basket (Mass-Premium)
+    luxury: 3200         # Oven + hob + hood basket (Luxury)
+
+# Premium uplift for top home-price deciles in new build
+premium_uplift_newbuild_top_deciles: 0.10  # +10% value uplift in top 2 deciles
+                                             # Reflects higher spec appliances in expensive homes
+
+# Income-to-price decile mapping weights (optional advanced tuning)
+# If left empty, use proportional shares from PPD directly
+decile_mapping_adjustments:
+  enabled: false  # Set to true to apply custom adjustments
+  # Example: boost top income decile spending in R&R panel
+  # income_to_rr_multipliers: {10: 1.2}
+
+# COICOP revision concordance (for time-series consistency)
+coicop_revisions:
+  # If ONS changed item codes, map old -> new
+  # Example: {"05.3.1.3_old": "05.3.1.3_new"}
+  enabled: false
+  mappings: {}
+
+# Data quality and coverage rules
+data_quality:
+  min_sample_size_ppd: 10000       # Minimum transactions per year for robust deciles
+  interpolation_method: linear      # For filling small gaps in time series
+  extrapolation_allowed: false      # Do not extrapolate beyond available data
+  carry_forward_max_years: 2        # Max years to carry forward Family Spending deciles if missing
+
+# Regional analysis (optional future extension)
+regional:
+  enabled: false
+  regions: ["England", "Scotland", "Wales", "Northern Ireland"]
+  # If enabled, compute separate panels per region
+
+# Notes on assumption sources and sensitivities
+# - kitchen_share_of_RM: Based on industry surveys (NKBA, KBB industry reports); ±5% sensitivity
+# - appliance_share_of_kitchen: Varies by project scope; luxury kitchens may be higher (~40%)
+# - range_share_within_cookers: Derived from trade data + retail SKU analysis; stable over 2015-2023
+# - ASPs: Reflect mid-market averages; update annually or use retail price indices

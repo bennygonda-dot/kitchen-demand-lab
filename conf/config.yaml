@@ -1,0 +1,62 @@
+# Main configuration for UK cooking appliance datasets pipeline
+# Long-run control parameters
+
+# Time range configuration
+YEARS_START: 2000  # Set to 'min' to auto-use earliest available per source
+YEARS_END: latest  # Latest complete period available; or specific year e.g. 2023
+FREQUENCY: annual  # 'annual' or 'quarterly' where series allow
+
+# Currency and indexation
+CURRENCY: GBP_current  # Keep current prices for HHFCE; index deflators separately
+INDEX_BASE_YEAR: 2019  # For volume indices normalization
+
+# Data source URLs (updated periodically; fetchers will resolve latest)
+data_sources:
+  ons_construction_output:
+    base_url: "https://www.ons.gov.uk/businessindustryandtrade/constructionindustry/datasets/outputintheconstructionindustry"
+    description: "Private Housing Repair & Maintenance value & volume"
+
+  ons_house_building:
+    base_url: "https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/ukhousebuildingpermanentdwellingscompleted"
+    description: "UK house building completions"
+
+  land_registry_ppd:
+    base_url: "https://www.gov.uk/government/statistical-data-sets/price-paid-data-downloads"
+    description: "HM Land Registry Price Paid Data (full, all years)"
+
+  hmrc_transactions:
+    base_url: "https://www.gov.uk/government/statistics/monthly-property-transactions-completed-in-the-uk-with-value-40000-or-above"
+    description: "UK residential property transactions monthly"
+
+  boe_mortgage_approvals:
+    base_url: "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?Travel=NIxAZxSUx&FromSeries=1&ToSeries=50&DAT=RNG&FD=1&FM=Jan&FY=1963&TD=31&TM=Dec&TY=2099&FNY=Y&CSVF=TT&html.x=66&html.y=26&SeriesCodes=LPMVQKR&UsingCodes=Y&Filter=N&title=LPMVQKR&VPD=Y"
+    description: "Bank of England mortgage approvals (house purchase)"
+
+  ons_consumer_trends:
+    base_url: "https://www.ons.gov.uk/economy/nationalaccounts/satelliteaccounts/datasets/consumertrends"
+    description: "HHFCE COICOP 05.3.1 Major household appliances"
+
+  ons_cpih_weights:
+    base_url: "https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/consumerpriceinflationdetailedreferencetables"
+    description: "CPIH/CPI weights at COICOP5 level"
+
+  ons_family_spending:
+    base_url: "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/detailedhouseholdexpenditurebyequivaliseddisposableincomedecilegroup"
+    description: "Family Spending (LCF) workbook 1 - expenditure by income decile"
+
+  hmrc_trade:
+    base_url: "https://www.uktradeinfo.com/trade-data/"
+    description: "UK Trade CN 8516.60 (electric ovens/cookers/ranges)"
+
+# Processing options
+processing:
+  cache_downloads: true  # Skip download if file exists with matching hash
+  log_level: INFO  # DEBUG, INFO, WARNING, ERROR
+  random_seed: 42  # For any stochastic operations (deterministic execution)
+
+# Output options
+outputs:
+  save_intermediate: true  # Save processed parquet files
+  generate_charts: true
+  chart_format: png
+  chart_dpi: 300
