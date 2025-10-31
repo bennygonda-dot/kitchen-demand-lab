@@ -1,0 +1,9 @@
+Fiscal_Year,Year_End_Date,Revenue_USD_M,Revenue_Source,EBITDA_USD_M,EBITDA_Margin_Pct,EBITDA_Source,Notes
+2017,2017-12-30,607,Calculated from segment mix,73,12.0,Estimated,Viking issues and AGA integration challenges
+2018,2018-12-29,625,Estimated,75,12.0,Estimated,Continued integration efforts
+2019,2019-12-28,594,Calculated from -4.9% decline,65,10.9,Estimated,4.9% revenue decline YoY
+2020,2020-01-02,680,Estimated from strong growth indicators,88,12.9,Estimated,270% backlog growth vs prior year (excl acquisitions)
+2021,2021-01-01,740,Estimated,104,14.1,Estimated,Strong consumer demand continuing
+2022,2022-12-31,755,Estimated,105,13.9,Estimated,Peak revenue period
+2023,2023-12-30,756,Calculated from Q4 data,98,13.0,Estimated,Slight decline from peak
+2024,2024-12-28,725,Confirmed - earnings release,95,13.1,Q4 margin confirmed,Down 4.1% YoY - consumer spending pressures

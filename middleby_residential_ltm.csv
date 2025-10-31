@@ -1,0 +1,9 @@
+Period_End,Quarter_End_Date,Quarterly_Revenue_USD_M,LTM_Revenue_USD_M,Quarterly_EBITDA_USD_M,LTM_EBITDA_USD_M,Quarterly_EBITDA_Margin_Pct,LTM_EBITDA_Margin_Pct,Notes
+2023-Q1,2023-04-01,195,760,27,105,13.8,13.8,Estimated from annual trends
+2023-Q2,2023-07-01,192,762,26,103,13.5,13.5,Estimated from annual trends
+2023-Q3,2023-09-30,180,756,21,98,11.7,13.0,Estimated from annual trends
+2023-Q4,2023-12-30,189,756,24,98,12.7,13.0,Calculated from Q4 2024 data
+2024-Q1,2024-03-30,188,749,25,96,13.3,12.8,Estimated from annual trends
+2024-Q2,2024-06-29,184,741,24,95,13.0,12.8,6.2% decline reported
+2024-Q3,2024-09-28,168,729,20,94,11.9,12.9,4.5% organic decline reported; ~12% margin
+2024-Q4,2024-12-28,185,725,24,95,13.1,13.1,$185M revenue confirmed; 13.1% margin confirmed
